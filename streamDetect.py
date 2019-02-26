@@ -15,7 +15,7 @@ face_cascade = cv2.CascadeClassifier('C:/ProgramData/Anaconda3/Library/share/Ope
 #https://github.com/Itseez/opencv/blob/master/data/haarcascades/haarcascade_eye.xml
 eye_cascade = cv2.CascadeClassifier('C:/ProgramData/Anaconda3/Library/share/OpenCV/haarcascades/haarcascade_eye.xml')
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0) #url for ipcam streaming/video('http://192.168.0.103:8080/video')
 
 while 1:
     ret, img = cap.read()
