@@ -7,6 +7,8 @@ Created on Sat Feb 23 19:48:53 2019
 
 import numpy as np
 import cv2
+import datetime
+import os
 
 # multiple cascades: https://github.com/Itseez/opencv/tree/master/data/haarcascades
 
@@ -23,9 +25,19 @@ while 1:
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
     for (x,y,w,h) in faces:
+        # Image Naming #
+
+        sysTime = datetime.datetime.now()
+        deviceTime=sysTime.strftime("%d_%m_%Y_%H_%M_%S_%f")
+        imageName = "Cam1"+deviceTime+".png"
+        
+        #  Image block complete #
+        
         cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = img[y:y+h, x:x+w]
+        #cv2.imwrite(imageName,img)
+        cv2.imwrite(os.path.join(path , imageName), img)
         
         eyes = eye_cascade.detectMultiScale(roi_gray)
         for (ex,ey,ew,eh) in eyes:
