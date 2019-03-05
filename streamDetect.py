@@ -24,6 +24,12 @@ while 1:
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
     for (x,y,w,h) in faces:
+       # Image Naming #
+
+        sysTime = datetime.datetime.now()
+        deviceTime=sysTime.strftime("%d_%m_%Y_%H_%M_%S_%f")
+        imageName = "Cam1"+deviceTime+".png"
+        
         #  Image block complete #
         
         cv2.rectangle(img,(x,y),(x+w,y+h),(57,255,20),2)
@@ -33,7 +39,6 @@ while 1:
         sub_face = img[y:y+h, x:x+w]
         #cv2.imwrite(imageName,img)
         cv2.imwrite(os.path.join(path , imageName), sub_face)
-        
        
 
     cv2.imshow('img',img)
