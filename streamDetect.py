@@ -4,21 +4,21 @@ Created on Thu Mar 07 15:04:53 2019
 
 @author: Trevor
 """
-
-
+import time
 import cv2
 import datetime
 import os
 import multiprocessing
+from Mongodb_SendingString import UploadImage
 
 
 def detect_faces():
 
-    face_cascade = cv2.CascadeClassifier('C:/opencv/sources/data/haarcascades/haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier('/home/krypton/Documents/haarcascades/haarcascade_frontalface_default.xml')
     
     
     cap = cv2.VideoCapture(0)
-    path = "E:/Programs/Python/images"
+    path ='/home/krypton/Documents/Image'
     imgCtr=0
     
     
@@ -39,21 +39,16 @@ def detect_faces():
     #=============== Image Naming block complete ====================
             
             cv2.rectangle(img,(x,y),(x+w,y+h),(57,255,20),2)
-           # roi_gray = gray[y:y+h, x:x+w]
+            #roi_gray = gray[y:y+h, x:x+w]
             #roi_color = img[y:y+h, x:x+w]
             
             sub_face = img[y:y+h, x:x+w]
-            #cv2.imwrite(imageName,img)
             imgCtr+=1
             
             if(imgCtr==5):
                 cv2.imwrite(os.path.join(path , imageName), sub_face)
-                imgCtr=0
-            
-           
-            
-           
-    
+                imgCtr=0    
+                
         cv2.imshow('img',img)
         k = cv2.waitKey(30) & 0xff
         if k == 27:
@@ -63,9 +58,16 @@ def detect_faces():
     cv2.destroyAllWindows()
     
 def upload_images():
-    
-        print("Image Uploading")
-    
+       
+    obj = UploadImage()
+    starttime=time.time()
+    try: 
+        while True:    
+            obj.upload()
+            time.sleep(60.0 -((time.time() - starttime) % 60.0))
+    except KeyboardInterrupt:
+        pass
+                    
 
 if __name__ == "__main__":
     
@@ -77,4 +79,3 @@ if __name__ == "__main__":
     
     p1.join()
     p2.join()
-
