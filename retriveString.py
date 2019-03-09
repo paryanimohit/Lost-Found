@@ -1,4 +1,4 @@
-from Connection import MongoConnection
+from connection import MongoConnection
 import base64
 
 a=[]
