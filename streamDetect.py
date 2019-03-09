@@ -9,7 +9,7 @@ import cv2
 import datetime
 import os
 import multiprocessing
-from Mongodb_SendingString import UploadImage
+from mongoDB_SendString import UploadImage
 
 
 def detect_faces():
