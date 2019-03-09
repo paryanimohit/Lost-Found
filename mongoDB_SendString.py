@@ -1,6 +1,6 @@
 import base64
 import os
-from Connection import MongoConnection
+from connection import MongoConnection
 class UploadImage():
     def upload(self):
         j=0
