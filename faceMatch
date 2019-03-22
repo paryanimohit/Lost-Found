@@ -1,0 +1,36 @@
+import face_recognition
+import pickle
+import os
+known_encodings=[] 
+
+imagesNames=os.listdir("/home/dark/Programing/Major/ImageToText")
+a=[]
+
+for name in imagesNames:
+    textFileName="/home/dark/Programing/Major/ImageToText/"+name
+    with open (textFileName,"rb") as fp:
+        a=pickle.load(fp) 
+       
+    
+        
+
+    unknownImages=os.listdir("/home/dark/Programing/Major/Down_Images")
+    for name2 in unknownImages:
+        
+        image_to_test = face_recognition.load_image_file("/home/dark/Programing/Major/Down_Images/"+name2)
+        try:
+            image_to_test_encoding = face_recognition.face_encodings(image_to_test)[0]  
+        except Exception as e:
+            
+            continue
+        
+            
+        face_distances = face_recognition.face_distance(a, image_to_test_encoding)
+        percentage=1-face_distances
+        if( percentage>0.5):
+            print(name2)
+            print("*"*15)
+            print("Image stored in our Database : "+name+"\nImage retrived from camera : "+name2)
+            print("Match percent : "+str(percentage*100)+"%")
+            print("*"*15)
+   
