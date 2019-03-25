@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Mar 23 15:19:04 2019
+
+@author: dark
+"""
 import os
 from flask import Flask,render_template,request
 from multiprocessing import Process,freeze_support
@@ -21,7 +28,7 @@ def start():
     password=request.form.get('password')
     print(str(userid)+"\n"+str(password))
     if  password=='1234' and userid=="1@gmail.com":
-        return render_template("button.html")
+        return render_template("parallax.html")
     else:
         return "Error occured"
     
@@ -34,7 +41,7 @@ def py():
      p1.start()
      p2.start()
      
-     return "sucess"
+     return render_template("parallax_2.html")
  
 def detect_faces():
 
@@ -73,7 +80,7 @@ def detect_faces():
                 cv2.imwrite(os.path.join(path , imageName), sub_face)
                 imgCtr=0    
                 
-        cv2.imshow('img',img)
+        cv2.imshow('Press ESC to exit',img)
         k = cv2.waitKey(30) & 0xff
         if k == 27:
             break
@@ -89,7 +96,7 @@ def upload_images():
         try: 
             while True:    
                 obj.upload()
-                time.sleep(60.0 -((time.time() - starttime) % 60.0))
+                time.sleep(60.0 -((time.time() - starttime) % 60.0)) 
         except KeyboardInterrupt:
             pass    
  
