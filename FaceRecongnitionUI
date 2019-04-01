@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
 """
 Created on Sun Mar 31 17:33:00 2019
 
@@ -14,6 +13,9 @@ import cv2
 from multiprocessing import Process,freeze_support
 from flask import Flask,render_template,request
 from faceMatch import FaceMatch
+from Connection import MongoConnection
+import base64
+
 
 
 app1 = Flask('__name__')
@@ -48,7 +50,16 @@ def Export():
     
     p1.start()
     return render_template("parallaxServer.html")
-        
+@app1.route('/retriveImages',methods=['GET','POST'])        
+def retriveImages():
+    p2 = Process(target=doretriveImages)
+    
+    p2.start()
+    return render_template("parallaxServer.html")
+    
+    
+    
+    
 def detectFaces():
     
 
@@ -111,10 +122,30 @@ def detectFaces():
                 
         print("Image converted:"+str(counter))
         ################## IMAGE TO TEXT ####################
+def doretriveImages():
+      
+
+    a=[]
+    collect=MongoConnection.getConnection()
+    dits=collect.find({},{"Image" : 1})
+    i=0
+    for dit in dits: 
         
+        a.append(dit['Image'])    
+        imgdata = base64.b64decode(a[i])
+        filename = str(i)+'.png'  
+        with open('/home/dark/Programing/Major/Down_Images/'+filename, 'wb') as f:
+            f.write(imgdata)
+        i=i+1
+    print(str(i)+" Images saved")
+    
+    collect=MongoConnection.getConnection()
+    x=collect.delete_many({})   
+    print(str(x)+"  Images Deleted from Mongo Database")     
         
 if __name__=='__main__':
     freeze_support()
     app1.run(host='0.0.0.0')
+    
     
     
