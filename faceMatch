@@ -84,7 +84,7 @@ class FaceMatch:
                        s.ehlo()
                        s.starttls()
                        s.ehlo()
-                       s.login("minorgroup6@gmail.com","pppm1234")
+                       s.login("gmail-id","password") #Enter a gmail account in place of "gmail-id" and password at "password"
                        s.send_message(msg)
                        s.quit()
                     except:
